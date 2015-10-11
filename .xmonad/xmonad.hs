@@ -305,6 +305,7 @@ myStartupHook = setWMName "LG3D"
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
+
 main = xmonad defaults
 
 -- A structure containing your configuration settings, overriding
@@ -330,7 +331,7 @@ defaults = defaultConfig {
         mouseBindings      = myMouseBindings,
 
       -- hooks, layouts
-        layoutHook         = spacing 10 $ avoidStruts $ myLayout,
+        layoutHook         = spacing 10 $ avoidStruts myLayout,
         manageHook         = myManageHook <+> manageDocks,
         handleEventHook    = myEventHook <+> docksEventHook,
         logHook            = myLogHook,

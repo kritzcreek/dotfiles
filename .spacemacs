@@ -27,19 +27,25 @@ values."
      ;; better-defaults
      emacs-lisp
      git
-     ;; markdown
+     markdown
      org
+     pandoc
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom
             shell-default-term-shell "/bin/zsh")
      ;; spell-checking
-     syntax-checking
-     version-control
-     haskell
-     purescript
-     react
      (colors :variables colors-enable-nyan-cat-progress-bar t)
+     syntax-checking
+     latex
+     version-control
+     (haskell :variables
+              haskell-enable-ghc-mod-support t)
+     react
+     eyebrowse
+     html
+     purescript
+     scala
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -195,6 +201,7 @@ values."
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init'.  You are free to put any
 user code."
+  (add-to-list 'exec-path "~/builds/cabal-builds/.cabal-sandbox/bin/")
   )
 
 (defun dotspacemacs/user-config ()
@@ -205,6 +212,7 @@ layers configuration. You are free to put any user code."
   (setq-default
    ;; js2-mode
    js2-basic-offset 2
+   js-indent-level 2
    ;; web-mode
    css-indent-offset 2
    web-mode-markup-indent-offset 2
@@ -215,6 +223,28 @@ layers configuration. You are free to put any user code."
     (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
     (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
     (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil)))
+
+  ;; Sets the default browser for opening links to chrome
+  (setq browse-url-browser-function 'browse-url-generic
+        browse-url-generic-program "google-chrome-stable")
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; PSC-IDE
+  ;; specify the path to the plugin directory
+  (add-to-list 'load-path "~/sandbox/psc-ide-emacs/")
+
+  ;; specify path to the 'psc-ide' executable(psc-ide on path is enough)
+  ;;(customize-set-variable 'psc-ide-executable "/home/creek/.local/bin/psc-ide")
+
+  (require 'psc-ide)
+
+  (add-hook 'purescript-mode-hook
+            (lambda ()
+              (add-to-list 'company-backends 'company-psc-ide-backend)
+              (company-mode)
+              (message "Purescript IDE enabled")
+              ))
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 )
 
 ;; Do not write anything past this comment. This is where Emacs will

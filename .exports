@@ -1,0 +1,2 @@
+DISABLE_LS_COLORS="true"
+export LANG=de_DE.UTF-8

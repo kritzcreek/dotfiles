@@ -1,3 +1,2 @@
-alias greet="echo Hello"
 alias zshrc="emacsclient ~/dotfiles/.zshrc"
 alias e="emacsclient"

@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/sh
 
 # Set to correct output device and resolution
 xrandr --output VGA-0 --mode 1920x1080

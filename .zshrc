@@ -17,7 +17,7 @@ antigen bundle command-not-found
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 # Load the theme.
-antigen theme norm
+antigen theme lambda
 
 # Tell antigen that you're done.
 antigen apply

@@ -5,10 +5,10 @@ urxvt*scrollBar:        false
 urxvt*matcher.button:   1
 urxvt.transparent:      true
 urxvt*allow_bold:       true
-urxvt.foreground:       #aaaaaa
+urxvt.foreground:       #eeeeee
 
 Xft*dpi:                96
 Xft*antialias:          true
 Xft*hinting:            full
 
-URxvt.tintColor:   #443333
+URxvt.tintColor:   #333333

@@ -1,5 +1,5 @@
-URxvt*font:             xft:Liberation Mono:pixelsize=15:antialias=true:hinting=true
-URxvt*boldFont:         xft:Liberation Mono:bold:pixelsize=15:antialias=true:hinting=true
+URxvt*font:             xft:Source Code Pro:pixelsize=15:antialias=true:hinting=true
+URxvt*boldFont:         xft:Source Code Pro:bold:pixelsize=15:antialias=true:hinting=true
 urxvt*termName:         rxvt
 urxvt*scrollBar:        false
 urxvt*matcher.button:   1
@@ -11,4 +11,4 @@ Xft*dpi:                96
 Xft*antialias:          true
 Xft*hinting:            full
 
-URxvt.tintColor:   #331100
+URxvt.tintColor:   #443333

@@ -1,3 +1,4 @@
 xrandr --output Virtual-0 --mode 1680x1050
 setxkbmap de
 feh --bg-fill ~/Images/anime-girl.png
+xcompmgr -c &

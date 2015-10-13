@@ -90,8 +90,8 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
+                         misterioso
                          spacemacs-dark
-                         monokai
                          leuven
                          )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
@@ -223,6 +223,8 @@ layers configuration. You are free to put any user code."
     (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
     (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
     (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil)))
+
+  (spacemacs/toggle-highlight-current-line-globally-off)
 
   ;; Sets the default browser for opening links to chrome
   (setq browse-url-browser-function 'browse-url-generic

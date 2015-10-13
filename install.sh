@@ -1,5 +1,5 @@
 # Symlinking
-ln -fvs ~/dotfiles/.spacemacs ~/.spacemacs
+ln -fvs ~/dotfiles/.spacemacs.d ~/.spacemacs.d
 ln -fvs ~/dotfiles/.zshrc ~/.zshrc
 ln -fvs ~/dotfiles/.aliases ~/.aliases
 ln -fvs ~/dotfiles/.exports ~/.exports

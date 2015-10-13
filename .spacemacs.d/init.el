@@ -231,10 +231,10 @@ layers configuration. You are free to put any user code."
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; PSC-IDE
   ;; specify the path to the plugin directory
-  (add-to-list 'load-path "~/sandbox/psc-ide-emacs/")
+  (add-to-list 'load-path "~/.spacemacs.d/psc-ide-emacs/")
 
   ;; specify path to the 'psc-ide' executable(psc-ide on path is enough)
-  ;;(customize-set-variable 'psc-ide-executable "/home/creek/.local/bin/psc-ide")
+  ;; (customize-set-variable 'psc-ide-executable "/home/creek/.local/bin/psc-ide")
 
   (require 'psc-ide)
 

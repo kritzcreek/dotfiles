@@ -1,3 +1,6 @@
 [submodule "antigen"]
 	path = antigen
 	url = https://github.com/zsh-users/antigen.git
+[submodule ".spacemacs.d/psc-ide-emacs"]
+	path = .spacemacs.d/psc-ide-emacs
+	url = https://github.com/epost/psc-ide-emacs.git

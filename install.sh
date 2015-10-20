@@ -7,9 +7,9 @@ ln -fvs ~/dotfiles/.functions ~/.functions
 ln -fvs ~/dotfiles/.Xdefaults ~/.Xdefaults
 ln -fvs ~/dotfiles/.gitconfig ~/.gitconfig
 ln -fvs ~/dotfiles/.xmonad ~/.xmonad
+ln -fvs ~/dotfiles/.xmobarrc ~/.xmobarrc
 
 # exec xmonad --recompile
 # exec xmonad --restart
 
-# Installing Arch
-echo "Now execute install_arch.sh"
+echo "All set."

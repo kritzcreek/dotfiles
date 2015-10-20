@@ -20,7 +20,9 @@ import Data.Monoid
 import System.Exit
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.DynamicLog
 import XMonad.Layout.Spacing
+import XMonad.Util.Run
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -77,7 +79,7 @@ myModMask       = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
+myWorkspaces    = ["1:term","2:code","3:web","4","5","6","7","8","9"]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -150,7 +152,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Use this binding with avoidStruts from Hooks.ManageDocks.
     -- See also the statusBar function from Hooks.DynamicLog.
     --
-    -- , ((modm              , xK_b     ), sendMessage ToggleStruts)
+    , ((modm              , xK_b     ), sendMessage ToggleStruts)
 
     -- Quit xmonad
     , ((modm .|. shiftMask, xK_q     ), io exitSuccess)
@@ -225,7 +227,7 @@ myLayout = tiled ||| Mirror tiled ||| Full
     nmaster = 1
 
     -- Default proportion of screen occupied by master pane
-    ratio   = 1/2
+    ratio   = 3/5
 
     -- Percent of screen to increment by when resizing panes
     delta   = 3/100
@@ -282,7 +284,14 @@ myEventHook = mempty
 -- It will add EWMH logHook actions to your custom log hook by
 -- combining it with ewmhDesktopsLogHook.
 --
-myLogHook = return ()
+myLogHook h =
+    let pp = defaultPP { ppTitle = xmobarColor "teal" "" . shorten 80
+              , ppCurrent = xmobarColor "yellow" "" . wrap "[" "]"
+              , ppVisible = wrap "(" ")"
+              , ppWsSep = "|"
+              , ppLayout = const ""
+              }
+    in dynamicLogWithPP pp { ppOutput = hPutStrLn h }
 
 ------------------------------------------------------------------------
 -- Startup hook
@@ -306,15 +315,9 @@ myStartupHook = setWMName "LG3D"
 -- Run xmonad with the settings you specify. No need to modify this.
 --
 
-main = xmonad defaults
-
--- A structure containing your configuration settings, overriding
--- fields in the default config. Any you don't override, will
--- use the defaults defined in xmonad/XMonad/Config.hs
---
--- No need to modify this.
---
-defaults = defaultConfig {
+main = do
+  h <- spawnPipe "xmobar"
+  xmonad $ defaultConfig {
       -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
@@ -334,6 +337,6 @@ defaults = defaultConfig {
         layoutHook         = spacing 10 $ avoidStruts myLayout,
         manageHook         = myManageHook <+> manageDocks,
         handleEventHook    = myEventHook <+> docksEventHook,
-        logHook            = myLogHook,
+        logHook            = myLogHook h,
         startupHook        = myStartupHook
     }

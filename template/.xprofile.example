@@ -2,3 +2,6 @@ xrandr --output Virtual-0 --mode 1680x1050
 setxkbmap de
 feh --bg-fill ~/Images/anime-girl.png
 xsetroot -cursor_name left_ptr
+
+#Run the cpp preprocesser to allow "define" statements in .Xdefaults
+xrdb $HOME/.Xdefaults

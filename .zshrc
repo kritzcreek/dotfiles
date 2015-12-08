@@ -18,7 +18,7 @@ antigen bundle mafredri/zsh-async
 antigen bundle sindresorhus/pure
 
 # Syntax highlighting bundle.
-antigen bundle zsh-users/zsh-syntax-highlighting
+# antigen bundle zsh-users/zsh-syntax-highlighting
 
 # Tell antigen that you're done.
 antigen apply

@@ -228,6 +228,9 @@ layers configuration. You are free to put any user code."
 
   (spacemacs/toggle-highlight-current-line-globally-off)
 
+  ;; Removes the strange highlighting of newly opened braces
+  (setq sp-highlight-pair-overlay nil)
+
   ;; Sets the default browser for opening links to chrome
   (setq browse-url-browser-function 'browse-url-generic
         browse-url-generic-program "google-chrome-stable")

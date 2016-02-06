@@ -53,7 +53,9 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages then consider to create a layer, you can also put the
    ;; configuration in `dotspacemacs/config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '((psc-ide :location (recipe
+                                                          :fetcher github
+                                                          :repo "kritzcreek/psc-ide-emacs")))
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -92,15 +94,15 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-                         misterioso
                          spacemacs-dark
+                         misterioso
                          leuven
                          )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro"
+   dotspacemacs-default-font '("Inconsolata"
                                :size 15
                                :weight normal
                                :width normal
@@ -235,23 +237,18 @@ layers configuration. You are free to put any user code."
   (setq browse-url-browser-function 'browse-url-generic
         browse-url-generic-program "google-chrome-stable")
 
+  ;; Make evil-mode up/down operate in screen lines instead of logical lines
+  (define-key evil-motion-state-map "j" 'evil-next-visual-line)
+  (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
+  ;; Also in visual mode
+  (define-key evil-visual-state-map "j" 'evil-next-visual-line)
+  (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
+
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; PSC-IDE
-  ;; specify the path to the plugin directory
-  (add-to-list 'load-path "~/.spacemacs.d/psc-ide-emacs/")
 
-  ;; specify path to the 'psc-ide' executable(psc-ide on path is enough)
-  ;; (customize-set-variable 'psc-ide-executable "/home/creek/.local/bin/psc-ide")
+  (global-set-key [f8] 'psc-ide-case-split)
 
-  (require 'psc-ide)
-
-  (add-hook 'purescript-mode-hook
-            (lambda ()
-              (add-to-list 'company-backends 'company-psc-ide-backend)
-              (company-mode)
-              (message "Purescript IDE enabled")
-              ))
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 )
 
 ;; Do not write anything past this comment. This is where Emacs will

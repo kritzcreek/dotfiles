@@ -1,5 +1,5 @@
-URxvt*font:             xft:Source Code Pro:pixelsize=15:antialias=true:hinting=true
-URxvt*boldFont:         xft:Source Code Pro:bold:pixelsize=15:antialias=true:hinting=true
+URxvt*font:             xft:inconsolata:size=12:antialias=true
+URxvt*boldFont:         xft:inconsolata:bold:size=12:antialias=true
 urxvt*termName:         rxvt
 urxvt*scrollBar:        false
 urxvt*matcher.button:   1
@@ -9,8 +9,6 @@ urxvt*allow_bold:       true
 Xft*dpi:                96
 Xft*antialias:          true
 Xft*hinting:            full
-
-!URxvt.tintColor:   #333333
 
 !TomorrowNightEighties
 #define t_background        #2d2d2d

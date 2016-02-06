@@ -6,6 +6,14 @@ urxvt*matcher.button:   1
 urxvt*transparent:      false
 urxvt*allow_bold:       true
 
+URxvt.imLocale: de_DE.utf8
+
+URxvt.perl-ext-common:        default,clipboard
+URxvt.keysym.Shift-Control-C: perl:clipboard:copy
+URxvt.keysym.Shift-Control-V: perl:clipboard:paste
+URxvt*iso14755: false
+URxvt*iso14755_52: false
+
 Xft*dpi:                96
 Xft*antialias:          true
 Xft*hinting:            full

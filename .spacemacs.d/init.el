@@ -94,16 +94,17 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
+                         leuven
                          spacemacs-dark
                          misterioso
                          leuven
                          )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
-   dotspacemacs-colorize-cursor-according-to-state t
+   dotspacemacs-colorize-cursor-according-to-state nil
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    dotspacemacs-default-font '("Inconsolata"
-                               :size 15
+                               :size 16
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -122,7 +123,7 @@ values."
    ;; Emacs commands (M-x).
    ;; By default the command key is `:' so ex-commands are executed like in Vim
    ;; with `:' and Emacs commands are executed with `<leader> :'.
-   dotspacemacs-command-key ":"
+   dotspacemacs-command-key "SPC"
    ;; If non nil `Y' is remapped to `y$'. (default t)
    dotspacemacs-remap-Y-to-y$ t
    ;; Location where to auto-save files. Possible values are `original' to
@@ -213,6 +214,8 @@ user code."
  This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
 
+  (add-to-list 'exec-path "~/.local/bin/")
+
   (setq-default
    ;; js2-mode
    js2-basic-offset 2
@@ -246,9 +249,31 @@ layers configuration. You are free to put any user code."
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; PSC-IDE
+  ;; Temporary Casesplitting
 
-  (global-set-key [f8] 'psc-ide-case-split)
+  (defun psc-ide-add-clause ()
+    "Add clause on identifier under cursor"
+    (interactive)
+    (let ((reg (psc-ide-ident-pos-at-point))
+          (new-lines (psc-ide-add-clause-impl)))
+      (beginning-of-line)
+      (kill-line)
+      (mapc (lambda (s) ""
+              (insert-string s)
+              (end-of-line)
+              (newline)) new-lines)
+      (kill-line)
+      (forward-line -1)))
 
+  (defun psc-ide-add-clause-impl ()
+    "Add clause on identifier under cursor"
+    (let ((reg (psc-ide-ident-pos-at-point)))
+      (psc-ide-unwrap-result (json-read-from-string
+                              (psc-ide-send (psc-ide-command-add-clause
+                                             (substring (thing-at-point 'line t) 0 -1)))))))
+
+  (global-set-key (quote [f7]) 'psc-ide-add-clause)
+  (global-set-key (quote [f8]) 'psc-ide-case-split)
 )
 
 ;; Do not write anything past this comment. This is where Emacs will

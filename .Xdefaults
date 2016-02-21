@@ -3,8 +3,12 @@ URxvt*boldFont:         xft:inconsolata:bold:size=12:antialias=true
 urxvt*termName:         rxvt
 urxvt*scrollBar:        false
 urxvt*matcher.button:   1
-urxvt*transparent:      false
+urxvt*transparent:      true
 urxvt*allow_bold:       true
+
+URxvt*inheritPixmap: true
+! URxvt*shading: 0 to 99 darkens, 101 to 200 lightens
+URxvt*shading: 20
 
 URxvt.imLocale: de_DE.utf8
 

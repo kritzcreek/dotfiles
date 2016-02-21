@@ -1,0 +1,20 @@
+background yes
+out_to_console yes
+out_to_x no
+update_interval 1
+total_run_times 0
+colorZ  95BA9C
+
+TEXT
+^fg(\#307D92)   ^i(/home/creek/.xmonad/icons/cpu.xbm) ^fg(\#fefefe)${cpu}%    \
+^fg(\#307D92)   ^i(/home/creek/.xmonad/icons/mem.xbm) ^fg(\#fefefe)${memperc}%    \
+^fg(\#307D92)   ^i(/home/creek/.xmonad/large_icons/battery.xbm) ^fg(\#fefefe)${battery_percent BAT0}%    \
+^fg(\#307D92)   ^i(/home/creek/.xmonad/icons/calendar.xbm) ^fg(\#fefefe)${time %a, %b %d, %Y}    \
+^fg(\#307D92)   ^i(/home/creek/.xmonad/icons/clock.xbm) ^fg(\#fefefe)${time %H:%M:%S} ^ca()    \
+^fg(\#307D92)   ^i(/home/creek/.xmonad/icons/Arch.xbm)^fg(\#fefefe)    \
+
+
+#Ç ${cpu}% \
+#Î ${memperc}% \
+#Â ${battery_percent     BAT0}% \
+#ø ${time %a, %b %d,%y È %H:%M:%S}

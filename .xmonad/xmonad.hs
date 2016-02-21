@@ -79,8 +79,14 @@ myModMask       = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["term","code","web","4","5","6","7","8","9"]
-
+myWorkspaces = [devel, code, web, music, media, mail, misc]
+               where music = "   ^i(/home/creek/.xmonad/icons/Music.xbm)"
+                     web   = "   ^i(/home/creek/.xmonad/icons/www.xbm)"
+                     code  = "   ^i(/home/creek/.xmonad/icons/code.xbm)"
+                     devel = "   ^i(/home/creek/.xmonad/icons/Devel.xbm)"
+                     media = "   ^i(/home/creek/.xmonad/icons/media.xbm)"
+                     mail  = "   ^i(/home/creek/.xmonad/icons/mail.xbm)"
+                     misc  = "   ^i(/home/creek/.xmonad/icons/pacman.xbm)"
 -- Border colors for unfocused and focused windows, respectively.
 --
 myNormalBorderColor  = "#dddddd"
@@ -97,8 +103,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launch dmenu
     , ((modm,               xK_d     ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
 
-    -- launch gmrun
-    , ((modm .|. shiftMask, xK_d     ), spawn "gmrun")
+    -- launch chromium
+    , ((modm,               xK_c     ), spawn "chromium")
+
+    -- launch emacs
+    , ((modm,               xK_x     ), spawn "emacsclient -c -a \"\"")
 
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
@@ -246,16 +255,7 @@ myLayout = tiled ||| Mirror tiled ||| Full
 -- To match on the WM_NAME, you can use 'title' in the same way that
 -- 'className' and 'resource' are used below.
 --
-myManageHook = composeAll
-    [ className =? "MPlayer"        --> doFloat
-    , className =? "Gimp"           --> doFloat
-    , resource  =? "desktop_window" --> doIgnore
-    , className =? "emulator" --> doFloat
-    , className =? "emulator64-arm" --> doFloat
-    , className =? "emulator64-x86" --> doFloat
-    , className =? "emulator-x86" --> doFloat
-    , className =? "emulator-arm" --> doFloat
-    , resource  =? "kdesktop"       --> doIgnore ]
+myManageHook = composeAll []
 
 ------------------------------------------------------------------------
 -- Event handling
@@ -283,15 +283,31 @@ myEventHook = mempty
 -- It will add EWMH logHook actions to your custom log hook by
 -- combining it with ewmhDesktopsLogHook.
 --
-myLogHook h =
-    let pp = defaultPP { ppTitle = xmobarColor "teal" "" . shorten 80
-              , ppCurrent = xmobarColor "yellow" "" . wrap "[" "]"
-              , ppVisible = wrap "(" ")"
-              , ppWsSep = "|"
-              , ppLayout = const ""
-              }
-    in dynamicLogWithPP pp { ppOutput = hPutStrLn h }
+-- myLogHook h =
+--     let pp = defaultPP { ppTitle = xmobarColor "teal" "" . shorten 80
+--               , ppCurrent = xmobarColor "yellow" "" . wrap "[" "]"
+--               , ppVisible = wrap "(" ")"
+--               , ppWsSep = "|"
+--               , ppLayout = const ""
+--               }
+--     in dynamicLogWithPP pp { ppOutput = hPutStrLn h }
 
+myLogHook dzproc = dynamicLogWithPP $ dzenPP {
+      ppOutput = hPutStrLn dzproc
+    , ppTitle =  pad  . shorten 50
+    , ppLayout = dzenColor color4 background . (\x -> case x of
+                                             "Spacing 10 Tall" -> "    ^i(/home/creek/.xmonad/icons/tiling.xbm)"
+                                             "Spacing 10 Mirror Tall" -> "    ^i(/home/creek/.xmonad/icons/mirrortall.xbm)"
+                                             "Spacing 10 Full" -> "    ^i(/home/creek/.xmonad/icons/mirrortall.xbm)"
+                                             _ -> "  New Layout "
+                                             )
+
+    , ppCurrent = dzenColor foreground background -- foreground "#FF6000"
+    , ppVisible = dzenColor color4 background
+    , ppHidden = dzenColor color4 background  -- foreground "#7BB352"
+    , ppHiddenNoWindows = dzenColor color8 background
+    , ppOrder = \(ws:l:t:_) -> [ws,l,t]
+    }
 ------------------------------------------------------------------------
 -- Startup hook
 
@@ -314,16 +330,25 @@ myStartupHook = setWMName "LG3D"
 -- Run xmonad with the settings you specify. No need to modify this.
 --
 
+myStatusBar, myConkyBar, myFont :: String
+myStatusBar =
+  "dzen2 -x 0 -w '1000' -h '28' -ta l -xs 1 -fg '" ++ foreground ++ "' -bg '" ++ background ++ "' -fn '" ++ myFont ++ "'"
+myConkyBar =
+  "conky -c ~/.xmonad/conky_dzen | dzen2 -ta r -x '1000' -w '920' -h '28' -p $OPTS -xs 1 -fg '" ++ foreground ++ "' -bg '" ++ background ++ "' -fn '" ++ myFont ++ "'"
+
+
+
+
 main = do
-  h <- spawnPipe "xmobar"
+  dzproc <- spawnPipe $ myStatusBar
+  dzstatus <- spawnPipe $ myConkyBar
+  -- h <- spawnPipe "xmobar"
   xmonad $ defaultConfig {
       -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
         borderWidth        = myBorderWidth,
         modMask            = myModMask,
-        -- numlockMask deprecated in 0.9.1
-        -- numlockMask        = myNumlockMask,
         workspaces         = myWorkspaces,
         normalBorderColor  = myNormalBorderColor,
         focusedBorderColor = myFocusedBorderColor,
@@ -333,9 +358,30 @@ main = do
         mouseBindings      = myMouseBindings,
 
       -- hooks, layouts
-        layoutHook         = spacing 10 $ avoidStruts myLayout,
+        layoutHook         = smartSpacing 40 $ avoidStruts myLayout,
         manageHook         = myManageHook <+> manageDocks,
         handleEventHook    = myEventHook <+> docksEventHook,
-        logHook            = myLogHook h,
+        logHook            = myLogHook dzproc,
         startupHook        = myStartupHook
     }
+
+myFont = "-*-Source Code Pro-*-*-*-*-15-*-*-*-*-*-*-*"
+
+background= "#232323" -- "#0E0E0E"
+foreground= "#CBCBCB"
+color0= "#454545"
+color8= "#676767"
+color1=  "#CC4747"
+color9=  "#BF5858"
+color2=  "#A0CF5D"
+color10= "#B8D68C"
+color3=  "#FF9B52"
+color11= "#FFB680"
+color4=  "#307D92" -- "#508934" -- "#AB2010" -- "#99492F"
+color12= "#99C7BF"
+color5=  "#A966CC"
+color13= "#BD9FCC"
+color6=  "#6CAB79"
+color14= "#95BA9C"
+color7=  "#d3d3d3"
+color15= "#fefefe"

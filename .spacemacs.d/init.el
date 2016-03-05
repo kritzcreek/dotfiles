@@ -238,7 +238,7 @@ layers configuration. You are free to put any user code."
 
   ;; Sets the default browser for opening links to chrome
   (setq browse-url-browser-function 'browse-url-generic
-        browse-url-generic-program "google-chrome-stable")
+        browse-url-generic-program "chromium")
 
   ;; Make evil-mode up/down operate in screen lines instead of logical lines
   (define-key evil-motion-state-map "j" 'evil-next-visual-line)

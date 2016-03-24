@@ -1,4 +1,5 @@
 import           Data.Monoid              (All)
+import           Data.List (notElem)
 import           System.Exit
 import           System.IO                (Handle, hPutStrLn)
 import           XMonad
@@ -21,20 +22,14 @@ import qualified XMonad.StackSet          as W
 term :: String
 term = "urxvt"
 
-myFocusFollowsMouse :: Bool
-myFocusFollowsMouse = True
-
 mMask = mod4Mask
 
 myWorkspaces :: [String]
-myWorkspaces = [devel, code, web, music, media, mail, misc]
-               where music = "   ^i(/home/creek/.xmonad/icons/Music.xbm)"
-                     web   = "   ^i(/home/creek/.xmonad/icons/www.xbm)"
-                     code  = "   ^i(/home/creek/.xmonad/icons/code.xbm)"
-                     devel = "   ^i(/home/creek/.xmonad/icons/Devel.xbm)"
-                     media = "   ^i(/home/creek/.xmonad/icons/media.xbm)"
-                     mail  = "   ^i(/home/creek/.xmonad/icons/mail.xbm)"
-                     misc  = "   ^i(/home/creek/.xmonad/icons/pacman.xbm)"
+myWorkspaces = [devel, code, web]
+               where
+                 web   = "   ^i(/home/creek/.xmonad/icons/www.xbm)"
+                 code  = "   ^i(/home/creek/.xmonad/icons/code.xbm)"
+                 devel = "   ^i(/home/creek/.xmonad/icons/Devel.xbm)"
 
 scratchpads :: [NamedScratchpad]
 scratchpads =
@@ -54,7 +49,7 @@ scratchpads =
 --
 -- myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
 myKeys =
-    [ ((mMask .|. shiftMask, xK_Return), spawn term)
+    [ ((mMask,               xK_t     ), spawn term)
     , ((mMask,               xK_d     ), spawn dmenu)
     , ((mMask,               xK_c     ), spawn "chromium")
     , ((mMask,               xK_x     ), spawn "emacsclient -c -a \"\"")
@@ -92,24 +87,6 @@ myKeys =
                      , "&& eval \"$exe\""
                      ]
 
-
-------------------------------------------------------------------------
--- Mouse bindings: default actions bound to mouse events
---
-myMouseBindings
-  :: XConfig t -> M.Map (KeyMask, Button) (Window -> X ())
-myMouseBindings XConfig{XMonad.modMask = modm} =
-  M.fromList
-    -- mod-button1, Set the window to floating mode and move by dragging
-    [ ((modm, button1), \w -> focus w >> mouseMoveWindow w
-                                      >> windows W.shiftMaster)
-    -- mod-button2, Raise the window to the top of the stack
-    , ((modm, button2), \w -> focus w >> windows W.shiftMaster)
-    -- mod-button3, Set the window to floating mode and resize by dragging
-    , ((modm, button3), \w -> focus w >> mouseResizeWindow w
-                                      >> windows W.shiftMaster)
-    ]
-
 myLayout = Tall nmaster delta ratio
   where
     nmaster = 1
@@ -119,7 +96,7 @@ myLayout = Tall nmaster delta ratio
 myManageHook :: ManageHook
 myManageHook =  composeAll [
   manageDocks
-  , (isFullscreen --> doFullFloat)
+  , isFullscreen --> doFullFloat
   , namedScratchpadManageHook scratchpads
   , manageHook def
   ]
@@ -132,17 +109,12 @@ myLogHook dzproc =
   fadeInactiveLogHook 0.9 <+>
   dynamicLogWithPP dzenPP {
       ppOutput = hPutStrLn dzproc
+    , ppLayout = const ""
     , ppTitle =  pad  . shorten 50
-    , ppLayout = dzenColor color4 background .
-      (\x -> case x of
-        "Spacing 10 Tall" -> "    ^i(/home/creek/.xmonad/icons/tiling.xbm)"
-        "Spacing 10 Mirror Tall" -> "    ^i(/home/creek/.xmonad/icons/mirrortall.xbm)"
-        "Spacing 10 Full" -> "    ^i(/home/creek/.xmonad/icons/mirrortall.xbm)"
-        _ -> "  New Layout "
-      )
-    , ppCurrent = dzenColor foreground background -- foreground "#FF6000"
+    , ppCurrent = dzenColor foreground background
     , ppVisible = dzenColor color4 background
-    , ppHidden = dzenColor color4 background  -- foreground "#7BB352"
+      -- Hides the NamedScratchPad Tag
+    , ppHidden = filter (`notElem` "NSP") . dzenColor color4 background  -- foreground "#7BB352"
     , ppHiddenNoWindows = dzenColor color8 background
     , ppOrder = \(ws:l:t:_) -> [ws,l,t]
     }
@@ -172,11 +144,10 @@ main = do
   _ <- spawnPipe myConkyBar
   xmonad $ def {
         terminal           = term,
-        focusFollowsMouse  = myFocusFollowsMouse,
+        focusFollowsMouse  = True,
         borderWidth        = 0,
         modMask            = mMask,
         workspaces         = myWorkspaces,
-        mouseBindings      = myMouseBindings,
         layoutHook         = smartSpacing 20 $ avoidStruts myLayout,
         manageHook         = myManageHook <+> manageDocks,
         handleEventHook    = myEventHook <+> docksEventHook,

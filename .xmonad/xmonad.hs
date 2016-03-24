@@ -44,23 +44,19 @@ scratchpads =
       scratch label command = NS label (term ++ " -name " ++ label ++ command)
                               (resource =? label)
                               mySPFloat
-------------------------------------------------------------------------
--- Key bindings. Add, modify or remove key bindings here.
---
--- myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
+
 myKeys =
     [ ((mMask,               xK_t     ), spawn term)
     , ((mMask,               xK_d     ), spawn dmenu)
     , ((mMask,               xK_c     ), spawn "chromium")
-    , ((mMask,               xK_x     ), spawn "emacsclient -c -a \"\"")
+    , ((mMask,               xK_e     ), spawn "emacsclient -c -a \"\"")
     , ((mMask .|. shiftMask, xK_c     ), kill)
 
-    -- Scratchpads
-
+      -- Scratchpads
     , ((mMask, xK_Return              ), namedScratchpadAction scratchpads "term")
     , ((mMask .|. shiftMask, xK_Return), namedScratchpadAction scratchpads "term2")
 
-
+      -- Layout
     , ((mMask,               xK_j     ), windows W.focusDown)
     , ((mMask,               xK_k     ), windows W.focusUp  )
     , ((mMask .|. shiftMask, xK_j     ), windows W.swapDown  )
@@ -71,7 +67,7 @@ myKeys =
     , ((mMask              , xK_period), sendMessage (IncMasterN (-1)))
     , ((mMask              , xK_b     ), sendMessage ToggleStruts)
 
-    -- Restart xmonad
+      -- Restart xmonad
     , ((mMask .|. shiftMask, xK_q     ), io exitSuccess)
     , ((mMask              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
     ]

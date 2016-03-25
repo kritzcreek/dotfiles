@@ -213,7 +213,7 @@ values."
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init'.  You are free to put any
 user code."
-  (add-to-list 'exec-path "~/builds/cabal-builds/.cabal-sandbox/bin/")
+  (setq-default dotspacemacs-configuration-layer-path '("~/.spacemacs/private/"))
   )
 
 (defun dotspacemacs/user-config ()

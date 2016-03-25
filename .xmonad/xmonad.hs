@@ -49,7 +49,7 @@ myKeys =
     [ ((mMask,               xK_t     ), spawn term)
     , ((mMask,               xK_d     ), spawn dmenu)
     , ((mMask,               xK_c     ), spawn "chromium")
-    , ((mMask,               xK_e     ), spawn "emacsclient -c -a \"\"")
+    , ((mMask,               xK_e     ), spawn "emacs")
     , ((mMask .|. shiftMask, xK_c     ), kill)
 
       -- Scratchpads

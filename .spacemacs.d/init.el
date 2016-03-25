@@ -47,15 +47,22 @@ values."
      react
      eyebrowse
      html
-     purescript
+     ;; purescript
+     ;; My personal layer
+     kc-purescript
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages then consider to create a layer, you can also put the
    ;; configuration in `dotspacemacs/config'.
-   dotspacemacs-additional-packages '((psc-ide :location (recipe
-                                                          :fetcher github
-                                                          :repo "kritzcreek/psc-ide-emacs")))
+   dotspacemacs-additional-packages '(
+                                      ;; (psc-ide :location (recipe
+                                      ;;                     :fetcher github
+                                      ;;                     :repo "kritzcreek/psc-ide-emacs"))
+                                      ;; (flycheck-purescript :location (recipe
+                                      ;;                                 :fetcher github
+                                      ;;                                 :repo "bsermons/flycheck-purescript"))
+                                      )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -103,7 +110,7 @@ values."
    dotspacemacs-colorize-cursor-according-to-state nil
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("Inconsolata"
+   dotspacemacs-default-font '("Operator Mono"
                                :size 16
                                :weight normal
                                :width normal
@@ -249,31 +256,33 @@ layers configuration. You are free to put any user code."
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; PSC-IDE
-  ;; Temporary Casesplitting
-
-  (defun psc-ide-add-clause ()
-    "Add clause on identifier under cursor"
-    (interactive)
-    (let ((reg (psc-ide-ident-pos-at-point))
-          (new-lines (psc-ide-add-clause-impl)))
-      (beginning-of-line)
-      (kill-line)
-      (mapc (lambda (s) ""
-              (insert-string s)
-              (end-of-line)
-              (newline)) new-lines)
-      (kill-line)
-      (forward-line -1)))
-
-  (defun psc-ide-add-clause-impl ()
-    "Add clause on identifier under cursor"
-    (let ((reg (psc-ide-ident-pos-at-point)))
-      (psc-ide-unwrap-result (json-read-from-string
-                              (psc-ide-send (psc-ide-command-add-clause
-                                             (substring (thing-at-point 'line t) 0 -1)))))))
 
   (global-set-key (quote [f7]) 'psc-ide-add-clause)
   (global-set-key (quote [f8]) 'psc-ide-case-split)
+  ;; (set-face-attribute 'default nil
+  ;;                     :family "Operator Mono"
+  ;;                     :weight 'regular)
+
+  ;; (set-face-attribute 'font-lock-builtin-face nil
+  ;;                     :family "Operator Mono"
+  ;;                     :weight 'regular)
+
+  ;; (set-face-attribute 'font-lock-type-face nil
+  ;;                     :family "Operator Mono"
+  ;;                     :weight 'demibold
+  ;;                     :underline nil)
+
+  ;; (set-face-attribute 'font-lock-keyword-face nil
+  ;;                     :family "Operator Mono"
+  ;;                     :weight 'medium
+  ;;                     :width 'condensed
+  ;;                     :slant 'italic)
+
+  ;; (set-face-attribute 'font-lock-comment-face nil
+  ;;                     :family "Operator Mono"
+  ;;                     :weight 'medium
+  ;;                     :width 'condensed
+  ;;                     :slant 'italic)
 )
 
 ;; Do not write anything past this comment. This is where Emacs will

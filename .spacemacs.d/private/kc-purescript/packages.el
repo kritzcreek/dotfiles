@@ -48,22 +48,25 @@
   (spacemacs|add-company-hook purescript-mode))
 
 (defun kc-purescript/post-init-flycheck ()
-  (spacemacs/add-flycheck-hook 'purescript-mode-hook))
+  (spacemacs/add-flycheck-hook 'purescript-mode))
 
 (defun kc-purescript/init-purescript-mode ()
   (use-package purescript-mode
     :defer t
     :config
     (progn
+      (add-hook 'purescript-mode-hook
+                (lambda ()
+                  (set (make-local-variable 'compile-command)
+                       (format "pulp --monochrome build --stash --censor-lib" (file-name-nondirectory buffer-file-name)))))
       (add-hook 'purescript-mode-hook 'turn-on-purescript-indentation))))
 
-(defun kc-purescript/init-flycheck-purescript ()
-  (use-package flycheck-purescript
-    :defer t
-    :if (configuration-layer/package-usedp 'flycheck)
-    :config
-    (progn
-      (add-hook 'flycheck-mode-hook  'flycheck-purescript-setup)
+(when (configuration-layer/layer-usedp 'syntax-checking)
+  (defun kc-purescript/init-flycheck-purescript ()
+    (use-package flycheck-purescript
+      :if (configuration-layer/package-usedp 'flycheck)
+      :init (add-hook 'flycheck-mode-hook  'flycheck-purescript-setup)
+      :config
       (add-hook 'purescript-mode-hook
                 (lambda ()
                   (setq default-directory

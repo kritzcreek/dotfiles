@@ -31,9 +31,7 @@
 
 (defconst kc-purescript-packages
   '(
-    (purescript-mode :location (recipe
-                                :fetcher github
-                                :repo "emacs-pe/purescript-mode"))
+    purescript-mode
     (psc-ide :location (recipe
                         :fetcher github
                         :repo "kritzcreek/psc-ide-emacs"))
@@ -57,8 +55,7 @@
     :defer t
     :config
     (progn
-      (add-hook 'purescript-mode-hook 'haskell-indentation-mode)
-      (setq haskell-literate nil))))
+      (add-hook 'purescript-mode-hook 'turn-on-purescript-indentation))))
 
 (defun kc-purescript/init-flycheck-purescript ()
   (use-package flycheck-purescript
@@ -84,6 +81,7 @@
         "mt"  'psc-ide-add-clause
         "mcs" 'psc-ide-case-split
         "ms"  'psc-ide-server-start
+        "mq"  'psc-ide-server-quit
         "ml"  'psc-ide-load-module
         "mia" 'psc-ide-add-import
         "ht"  'psc-ide-show-type))))

@@ -5,6 +5,10 @@ for file in ~/.{aliases,exports,extras,functions}; do
 done
 unset file
 
+# typeset -U path
+path=(~/bin ~/.local/bin $path)
+export PATH
+
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
 

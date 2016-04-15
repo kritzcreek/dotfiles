@@ -10,3 +10,6 @@
 ;;; License: GPLv3
 
 (spacemacs|defvar-company-backends purescript-mode)
+
+(defvar purescript-mode-unicode-isactive nil "Whether the unicode input method is active")
+

@@ -50,15 +50,29 @@
 (defun kc-purescript/post-init-flycheck ()
   (spacemacs/add-flycheck-hook 'purescript-mode))
 
+(defun purescript-toggle-unicode ()
+  "Does things"
+  (interactive)
+  (if purescript-mode-unicode-isactive
+      (progn
+        (setq purescript-mode-unicode-isactive nil)
+        (set-input-method nil))
+    (progn
+      (setq purescript-mode-unicode-isactive t)
+      (turn-on-purescript-unicode-input-method))))
+
 (defun kc-purescript/init-purescript-mode ()
   (use-package purescript-mode
     :defer t
     :config
     (progn
+      (spacemacs/set-leader-keys-for-major-mode 'purescript-mode
+        "u" 'purescript-toggle-unicode)
       (add-hook 'purescript-mode-hook
                 (lambda ()
                   (set (make-local-variable 'compile-command)
-                       (format "pulp --monochrome build --stash --censor-lib" (file-name-nondirectory buffer-file-name)))))
+                       (format "pulp --monochrome build --stash --censor-lib"
+                               (file-name-nondirectory buffer-file-name)))))
       (add-hook 'purescript-mode-hook 'turn-on-purescript-indentation))))
 
 (when (configuration-layer/layer-usedp 'syntax-checking)
@@ -84,8 +98,10 @@
         "mt"  'psc-ide-add-clause
         "mcs" 'psc-ide-case-split
         "ms"  'psc-ide-server-start
+        "mb"  'psc-ide-rebuild
         "mq"  'psc-ide-server-quit
-        "ml"  'psc-ide-load-module
+        "ml"  'psc-ide-load-all
+        "mL"  'psc-ide-load-module
         "mia" 'psc-ide-add-import
         "ht"  'psc-ide-show-type))))
 

@@ -35,9 +35,9 @@
     (psc-ide :location (recipe
                         :fetcher github
                         :repo "kritzcreek/psc-ide-emacs"))
-    (flycheck-purescript :location (recipe
-                                    :fetcher github
-                                    :repo "bsermons/flycheck-purescript"))
+    ;; (flycheck-purescript :location (recipe
+    ;;                                 :fetcher github
+    ;;                                 :repo "bsermons/flycheck-purescript"))
     psci
     company
     flycheck

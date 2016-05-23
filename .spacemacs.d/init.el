@@ -7,16 +7,15 @@
    dotspacemacs-configuration-layer-path '("~/.spacemacs.d/private/")
    dotspacemacs-configuration-layers
    '(
+     yaml
      (auto-completion :variables
                       auto-completion-enable-snippets-in-popup t
                       auto-completion-return-key-behavior nil
                       auto-completion-tab-key-behavior 'complete)
-     ;; better-defaults
      emacs-lisp
      git
      markdown
      org
-     pandoc
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom
@@ -25,14 +24,12 @@
      (colors :variables colors-enable-nyan-cat-progress-bar t)
      syntax-checking
      latex
-     version-control
-     react
-     eyebrowse
+     bibtex
      html
      ;; My personal layer
      kc-purescript
-     themes-megapack
      kc-haskell
+     kc-org-journal
      )
    dotspacemacs-additional-packages '()
    dotspacemacs-excluded-packages '()

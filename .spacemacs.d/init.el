@@ -36,7 +36,7 @@
      )
    dotspacemacs-additional-packages '()
    dotspacemacs-excluded-packages '()
-   dotspacemacs-line-numbers t
+   dotspacemacs-line-numbers nil
    dotspacemacs-delete-orphan-packages t))
 
 (defun dotspacemacs/init ()
@@ -48,13 +48,12 @@
    ;; Possible values are: `recents' `bookmarks' `projects'.
    ;; (default '(recents projects))
    dotspacemacs-startup-lists '(recents projects)
-   dotspacemacs-themes '(
-                         gruvbox
-                         monokai
+   dotspacemacs-themes '( material
+                          material-light
                          )
    dotspacemacs-colorize-cursor-according-to-state nil
    dotspacemacs-default-font '("Operator Mono"
-                               :size 14
+                               ;; :size 14
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)

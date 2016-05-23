@@ -26,14 +26,13 @@
      syntax-checking
      latex
      version-control
-     (haskell :variables
-              haskell-enable-ghc-mod-support t)
      react
      eyebrowse
      html
      ;; My personal layer
      kc-purescript
      themes-megapack
+     kc-haskell
      )
    dotspacemacs-additional-packages '()
    dotspacemacs-excluded-packages '()

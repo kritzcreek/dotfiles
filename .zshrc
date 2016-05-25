@@ -8,6 +8,7 @@ unset file
 # typeset -U path
 path=(~/bin ~/.local/bin $path)
 export PATH
+export TERM=xterm-256color
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh

@@ -15,6 +15,7 @@
      emacs-lisp
      git
      markdown
+     (osx :variables mac-right-option-modifier nil)
      org
      pandoc
      (shell :variables
@@ -105,6 +106,9 @@
 
 (defun dotspacemacs/user-config ()
   (add-to-list 'exec-path "~/.local/bin/")
+
+  ;; Fix ZSH bugs under OSX
+  (setq system-uses-terminfo nil)
 
   (setq-default
    ;; js2-mode

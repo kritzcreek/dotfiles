@@ -30,25 +30,17 @@
 ;;; Code:
 
 (defconst kc-purescript-packages
-  '(
-    purescript-mode
+  '(purescript-mode
     (psc-ide :location (recipe
                         :fetcher github
-                        :repo "kritzcreek/psc-ide-emacs"))
-    ;; (flycheck-purescript :location (recipe
-    ;;                                 :fetcher github
-    ;;                                 :repo "bsermons/flycheck-purescript"))
+                        :repo "kritzcreek/psc-ide-emacs"
+                        :branch "async-network"))
     psci
     company
-    flycheck
-    purescript-font-lock
-    ))
+    purescript-font-lock))
 
 (defun kc-purescript/post-init-company ()
   (spacemacs|add-company-hook purescript-mode))
-
-(defun kc-purescript/post-init-flycheck ()
-  (spacemacs/add-flycheck-hook 'purescript-mode))
 
 (defun purescript-toggle-unicode ()
   "Does things"
@@ -68,23 +60,7 @@
     (progn
       (spacemacs/set-leader-keys-for-major-mode 'purescript-mode
         "u" 'purescript-toggle-unicode)
-      (add-hook 'purescript-mode-hook
-                (lambda ()
-                  (set (make-local-variable 'compile-command)
-                       (format "pulp --monochrome build --stash --censor-lib"
-                               (file-name-nondirectory buffer-file-name)))))
       (add-hook 'purescript-mode-hook 'turn-on-purescript-indentation))))
-
-(when (configuration-layer/layer-usedp 'syntax-checking)
-  (defun kc-purescript/init-flycheck-purescript ()
-    (use-package flycheck-purescript
-      :if (configuration-layer/package-usedp 'flycheck)
-      :init (add-hook 'flycheck-mode-hook  'flycheck-purescript-setup)
-      :config
-      (add-hook 'purescript-mode-hook
-                (lambda ()
-                  (setq default-directory
-                        (locate-dominating-file default-directory "bower.json")))))))
 
 (defun kc-purescript/init-psc-ide ()
   (use-package psc-ide

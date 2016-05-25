@@ -5,6 +5,8 @@ for file in ~/.{aliases,exports,extras,functions}; do
 done
 unset file
 
+eval $(thefuck --alias)
+
 # typeset -U path
 path=(~/bin ~/.local/bin $path)
 export PATH

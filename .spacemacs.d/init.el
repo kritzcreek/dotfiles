@@ -7,17 +7,16 @@
    dotspacemacs-configuration-layer-path '("~/.spacemacs.d/private/")
    dotspacemacs-configuration-layers
    '(
+     yaml
      (auto-completion :variables
                       auto-completion-enable-snippets-in-popup t
                       auto-completion-return-key-behavior nil
                       auto-completion-tab-key-behavior 'complete)
-     ;; better-defaults
      emacs-lisp
      git
      markdown
      (osx :variables mac-right-option-modifier nil)
      org
-     pandoc
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom
@@ -26,19 +25,16 @@
      (colors :variables colors-enable-nyan-cat-progress-bar t)
      syntax-checking
      latex
-     version-control
-     (haskell :variables
-              haskell-enable-ghc-mod-support t)
-     react
-     eyebrowse
+     bibtex
      html
      ;; My personal layer
      kc-purescript
-     themes-megapack
+     kc-haskell
+     kc-org-journal
      )
    dotspacemacs-additional-packages '()
    dotspacemacs-excluded-packages '()
-   dotspacemacs-line-numbers t
+   dotspacemacs-line-numbers nil
    dotspacemacs-delete-orphan-packages t))
 
 (defun dotspacemacs/init ()
@@ -50,13 +46,12 @@
    ;; Possible values are: `recents' `bookmarks' `projects'.
    ;; (default '(recents projects))
    dotspacemacs-startup-lists '(recents projects)
-   dotspacemacs-themes '(
-                         gruvbox
-                         monokai
+   dotspacemacs-themes '( material
+                          material-light
                          )
    dotspacemacs-colorize-cursor-according-to-state nil
    dotspacemacs-default-font '("Operator Mono"
-                               :size 14
+                               ;; :size 14
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -71,7 +66,7 @@
    dotspacemacs-helm-resize nil
    ;; if non nil, the helm header is hidden when there is only one source.
    ;; (default nil)
-   dotspacemacs-helm-no-header nil
+   dotspacemacs-helm-no-header t
    ;; define the position to display `helm', options are `bottom', `top',
    ;; `left', or `right'. (default 'bottom)
    dotspacemacs-helm-position 'bottom
@@ -102,10 +97,13 @@
    ))
 
 (defun dotspacemacs/user-init ()
+  (setq custom-file "~/.spacemacs.d/custom.el")
+  (load custom-file 'no-error)
   )
 
 (defun dotspacemacs/user-config ()
   (add-to-list 'exec-path "~/.local/bin/")
+  (setq org-default-notes-file "~/Documents/praxisprojekt/Dokumentation/notizen.org")
 
   ;; Fix ZSH bugs under OSX
   (setq system-uses-terminfo nil)
@@ -139,9 +137,15 @@
   (define-key evil-visual-state-map "j" 'evil-next-visual-line)
   (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
 
+  (setq
+   org-journal-dir         "~/Dropbox/org/journal/"
+   org-journal-date-format "#+TITLE: Journal Entry :: %d.%b.%Y (%A)")
+
   ;; PSC-IDE
   (global-set-key (quote [f7]) 'psc-ide-add-clause)
   (global-set-key (quote [f8]) 'psc-ide-case-split)
+  (global-set-key (kbd "C-SPC") 'company-complete)
+  (customize-set-variable 'psc-ide-rebuild-on-save nil)
 
   (set-face-attribute 'font-lock-comment-face nil
                       :family "Operator Mono"
@@ -149,25 +153,3 @@
                       :width 'condensed
                       :slant 'italic)
 )
-
-;; Do not write anything past this comment. This is where Emacs will
-;; auto-generate custom variable definitions.
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(safe-local-variable-values
-   (quote
-    ((haskell-process-args-ghci "ghci")
-     (haskell-process-path-ghci . "stack")
-     (haskell-process-type . ghci)
-     (hindent-style . "johan-tibell")
-     (haskell-indent-spaces . 4)))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
- '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))

@@ -27,9 +27,9 @@ mMask = mod4Mask
 myWorkspaces :: [String]
 myWorkspaces = [devel, code, web]
                where
-                 web   = "   ^i(/home/creek/.xmonad/icons/www.xbm)"
-                 code  = "   ^i(/home/creek/.xmonad/icons/code.xbm)"
-                 devel = "   ^i(/home/creek/.xmonad/icons/Devel.xbm)"
+                 web   = "   ^i(/home/creek/.xmonad/large_icons/www.xbm)"
+                 code  = "   ^i(/home/creek/.xmonad/large_icons/code.xbm)"
+                 devel = "   ^i(/home/creek/.xmonad/large_icons/Devel.xbm)"
 
 scratchpads :: [NamedScratchpad]
 scratchpads =
@@ -118,19 +118,20 @@ myLogHook dzproc =
 myStartupHook :: X ()
 myStartupHook = setWMName "LG3D"
 
-bar1Width = "1000"
-bar2Width = "920"
+bar1Width = "1600"
+bar2Width = "2060"
+barHeight = "'56'"
 
 myStatusBar, myConkyBar, bar1Width, bar2Width :: String
 myStatusBar =
   "dzen2 -x 0 -w '"
-  ++ bar1Width ++ "' -h '28' -ta l -xs 1 -fg '"
+  ++ bar1Width ++ "' -h " ++ barHeight ++ " -ta l -xs 1 -fg '"
   ++ foreground ++ "' -bg '" ++ background ++ "' -fn '"
   ++ myFont ++ "'"
 myConkyBar =
   "conky -c ~/.xmonad/conky_dzen | dzen2 -ta r -x '"
   ++ bar1Width ++"' -w '"
-  ++ bar2Width ++ "' -h '28' -p $OPTS -xs 1 -fg '"
+  ++ bar2Width ++ "' -h " ++ barHeight ++ " -p $OPTS -xs 1 -fg '"
   ++ foreground ++ "' -bg '" ++ background
   ++ "' -fn '" ++ myFont ++ "'"
 
@@ -153,7 +154,7 @@ main = do
 
 color8, color4, myFont, background, foreground :: String
 
-myFont = "-*-Source Code Pro-*-*-*-*-15-*-*-*-*-*-*-*"
+myFont = "-*-Pragmata Pro-*-*-*-*-30-*-*-*-*-*-*-*"
 
 background = "#232323"
 foreground = "#CBCBCB"

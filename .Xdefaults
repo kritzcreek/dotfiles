@@ -10,7 +10,7 @@ URxvt.iso14755_52: false
 
 
 ! font
-URxvt*font: xft:Operator\ Mono:size=12:antialias=true:hinting=true,xft:Liberation Mono:antialias=true:hinting=true
+URxvt*font: xft:Pragmata\ Pro:size=13:antialias=true:hinting=true,xft:Liberation Mono:antialias=true:hinting=true
 
 ! terminal padding
 URxvt.internalBorder: 25
@@ -27,6 +27,7 @@ Xft.hintstyle:  hintfull
 Xft.hinting: 1
 ! Xft.hinting: 0
 Xft.antialias: 1
+Xft.dpi: 140
 Xft.rgba: rgb
 
 ! clickable links, clipboard support, mouse wheel support, and on the fly font resizing

@@ -127,10 +127,6 @@
   ;; Removes the strange highlighting of newly opened braces
   (setq sp-highlight-pair-overlay nil)
 
-  ;; Sets the default browser for opening links to chrome
-  (setq browse-url-browser-function 'browse-url-generic
-        browse-url-generic-program "chromium")
-
   ;; Make evil-mode up/down operate in screen lines instead of logical lines
   (define-key evil-motion-state-map "j" 'evil-next-visual-line)
   (define-key evil-motion-state-map "k" 'evil-previous-visual-line)

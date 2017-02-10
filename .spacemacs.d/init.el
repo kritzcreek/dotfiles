@@ -59,6 +59,7 @@
    dotspacemacs-major-mode-leader-key ","
    dotspacemacs-major-mode-emacs-leader-key "C-M-m"
    dotspacemacs-command-key "SPC"
+   dotspacemacs-visual-line-move-text t
    dotspacemacs-remap-Y-to-y$ t
    dotspacemacs-auto-save-file-location 'cache
    dotspacemacs-use-ido nil
@@ -136,19 +137,23 @@
   (define-key evil-visual-state-map "j" 'evil-next-visual-line)
   (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
 
-  (setq
-   org-journal-dir         "~/Dropbox/org/journal/"
-   org-journal-date-format "#+TITLE: Journal Entry :: %d.%b.%Y (%A)")
-
   ;; PSC-IDE
   (global-set-key (quote [f7]) 'psc-ide-add-clause)
   (global-set-key (quote [f8]) 'psc-ide-case-split)
   (global-set-key (kbd "C-SPC") 'company-complete)
+
+  (defun purescript-unicodify ()
+    "Query replaces the current buffer for unicode substitutions"
+    (interactive)
+    (when (eq major-mode 'purescript-mode)
+      (save-excursion
+        (beginning-of-buffer)
+        (query-replace-regexp "->" "→")
+        (query-replace-regexp "<-" "←")
+        (query-replace-regexp "=>" "⇒")
+        (query-replace-regexp "forall" "∀")
+        (query-replace-regexp "::" "∷"))))
+
   (customize-set-variable 'psc-ide-rebuild-on-save nil)
 
-  (set-face-attribute 'font-lock-comment-face nil
-                      :family "Operator Mono"
-                      :weight 'medium
-                      :width 'condensed
-                      :slant 'italic)
 )

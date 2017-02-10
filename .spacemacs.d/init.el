@@ -96,13 +96,14 @@
    ))
 
 (defun dotspacemacs/user-init ()
-  (setq custom-file "~/.spacemacs.d/custom.el")
-  (load custom-file 'no-error)
-  )
+  (setq ns-use-srgb-colorspace nil
+        gnutls-min-prime-bits 4096
+        custom-file "~/.spacemacs.d/custom.el"
+        exec-path-from-shell-check-startup-files nil)
+  (load custom-file 'no-error))
 
 (defun dotspacemacs/user-config ()
   (add-to-list 'exec-path "~/.local/bin/")
-  (setq org-default-notes-file "~/Documents/praxisprojekt/Dokumentation/notizen.org")
 
   ;; Fix ZSH bugs under OSX
   (setq system-uses-terminfo nil)

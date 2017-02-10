@@ -110,7 +110,9 @@
   (setq-default
    ;; js2-mode
    js2-basic-offset 2
-   js-indent-level 2
+   js-indent-level 4
+   js2-mode-show-parse-errors nil
+   js2-mode-show-strict-warnings nil
    ;; web-mode
    css-indent-offset 2
    web-mode-markup-indent-offset 2

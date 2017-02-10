@@ -27,10 +27,9 @@
      latex
      bibtex
      html
+     (haskell :variables haskell-completion-backend 'intero)
      ;; My personal layer
-     kc-purescript
-     kc-haskell
-     kc-org-journal
+     purescript
      )
    dotspacemacs-additional-packages '()
    dotspacemacs-excluded-packages '()

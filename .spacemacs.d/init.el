@@ -25,13 +25,12 @@
      (colors :variables colors-enable-nyan-cat-progress-bar t)
      syntax-checking
      latex
-     bibtex
      html
      (haskell :variables haskell-completion-backend 'intero)
      ;; My personal layer
      purescript
      )
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(package-lint)
    dotspacemacs-excluded-packages '()
    dotspacemacs-line-numbers nil
    dotspacemacs-delete-orphan-packages t))

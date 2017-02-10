@@ -43,16 +43,16 @@
    ;; List of items to show in the startup buffer. If nil it is disabled.
    ;; Possible values are: `recents' `bookmarks' `projects'.
    ;; (default '(recents projects))
-   dotspacemacs-startup-lists '(recents projects)
    dotspacemacs-themes '( material
                           material-light
                          )
+   dotspacemacs-startup-lists '((bookmarks . 5) (projects . 5) (recents . 5))
    dotspacemacs-colorize-cursor-according-to-state nil
-   dotspacemacs-default-font '("Operator Mono"
-                               ;; :size 14
+   dotspacemacs-default-font '("PragmataPro"
+                               :size 16
                                :weight normal
                                :width normal
-                               :powerline-scale 1.1)
+                               :powerline-scale 1.8)
    dotspacemacs-leader-key "SPC"
    dotspacemacs-emacs-leader-key "M-m"
    dotspacemacs-major-mode-leader-key ","

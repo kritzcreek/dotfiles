@@ -1,0 +1,5 @@
+# dotfiles
+
+## THESE ARE NOT IN USE RIGHT NOW, SO THEY MIGHT TOTALLY NOT WORK
+
+Home sweet home
